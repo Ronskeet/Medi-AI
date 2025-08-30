@@ -1,0 +1,944 @@
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>MediAI | From Adversarial Scarcity to Relational Sovereignty</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="MediAI is architecting AI-assisted, child-centric, trauma-aware, restorative mediation ecosystems to transform family conflict systems." />
+    <style>
+      :root {
+        --bg: #0f1115;
+        --panel: #171b22;
+        --panel-alt: #1f2530;
+        --accent: #5d7bff;
+        --accent-glow: #8fa5ff;
+        --accent-warm: #ffb347;
+        --danger: #ff5f56;
+        --success: #4cc38a;
+        --text-hi: #f5f7fa;
+        --text-mid: #b7c2d1;
+        --text-dim: #6b7684;
+        --radius-sm: 6px;
+        --radius-md: 14px;
+        --radius-lg: 28px;
+        --grad-core: linear-gradient(135deg,#5d7bff 0%,#9f6bff 40%,#ffb347 100%);
+        --grad-soft: radial-gradient(circle at 30% 20%,rgba(157,131,255,0.25),transparent 60%);
+        --shadow-soft: 0 4px 18px -4px rgba(0,0,0,0.5),0 2px 4px -2px rgba(0,0,0,0.4);
+        --shadow-focus: 0 0 0 3px rgba(93,123,255,0.35),0 4px 22px -6px rgba(0,0,0,0.6);
+        font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text-hi);
+        line-height: 1.48;
+        background-image: var(--grad-soft);
+        font-size: 16px;
+        -webkit-font-smoothing: antialiased;
+      }
+      h1,h2,h3,h4 { font-weight: 600; line-height: 1.15; letter-spacing: .5px; }
+      h1 { font-size: clamp(2.4rem, 5vw, 3.8rem); margin: 0 0 1rem; background: var(--grad-core); -webkit-background-clip: text; color: transparent; }
+      h2 { font-size: clamp(1.8rem,3.2vw,2.6rem); margin: 0 0 1rem; }
+      h3 { font-size: clamp(1.3rem,2vw,1.6rem); margin: 2.2rem 0 1rem; }
+      p { margin: 0 0 1.1rem; max-width: 880px; }
+      a { color: var(--accent); text-decoration: none; }
+      a:hover { text-decoration: underline; }
+      nav {
+        position: sticky; top: 0; z-index: 50;
+        backdrop-filter: blur(14px);
+        background: rgba(15,17,21,0.78);
+        border-bottom: 1px solid #242a33;
+      }
+      .nav-inner {
+        max-width: 1300px; margin: 0 auto; padding: .8rem 2rem;
+        display: flex; align-items: center; gap: 2rem;
+      }
+      .brand {
+        font-weight: 600; font-size: 1.15rem; letter-spacing: .8px;
+        background: var(--grad-core); -webkit-background-clip: text; color: transparent;
+        display: flex; align-items: center; gap: .5rem;
+      }
+      .nav-links { list-style: none; margin: 0; padding: 0; display: flex; gap: 1.2rem; }
+      .nav-links a {
+        padding: .55rem .9rem;
+        border-radius: var(--radius-sm);
+        font-size: .9rem;
+        font-weight: 500;
+        color: var(--text-mid);
+        display: inline-block;
+        position: relative;
+        transition: color .25s, background .25s;
+      }
+      .nav-links a:focus-visible,
+      .nav-links a:hover {
+        color: var(--text-hi);
+        background: #222a35;
+        outline: none;
+      }
+      .nav-cta {
+        margin-left: auto;
+      }
+      .btn {
+        --btn-bg: var(--accent);
+        --btn-bg-h: var(--accent-glow);
+        background: var(--btn-bg);
+        color: #fff;
+        padding: .75rem 1.2rem;
+        border-radius: var(--radius-md);
+        border: none;
+        font-weight: 600;
+        letter-spacing: .4px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        font-size: .95rem;
+        box-shadow: 0 4px 20px -6px rgba(93,123,255,0.6);
+        transition: background .35s, transform .25s;
+      }
+      .btn:hover { background: var(--btn-bg-h); transform: translateY(-2px); }
+      .btn:active { transform: translateY(0); }
+      .btn.alt { --btn-bg: #273143; --btn-bg-h: #324059; box-shadow: none; }
+      .btn.outline {
+        background: transparent;
+        border: 2px solid var(--accent);
+        color: var(--accent);
+        box-shadow: none;
+      }
+      .btn.outline:hover { background: var(--accent); color: #fff; }
+      header.hero {
+        padding: 8rem 2rem 5rem;
+        position: relative;
+        overflow: hidden;
+      }
+      header.hero:before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(circle at 75% 40%, rgba(255,179,71,0.12), transparent 60%),
+          radial-gradient(circle at 25% 60%, rgba(157,131,255,0.18), transparent 70%);
+        mix-blend-mode: screen;
+        pointer-events: none;
+      }
+      .hero-inner { max-width: 1200px; margin: 0 auto; position: relative; z-index: 2; }
+      .hero-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: .55rem;
+        font-size: .75rem;
+        text-transform: uppercase;
+        letter-spacing: 1.8px;
+        background: #212834;
+        padding: .55rem .9rem;
+        border-radius: 100px;
+        color: var(--text-mid);
+        margin-bottom: 1.1rem;
+        border: 1px solid #2f3846;
+      }
+      .hero-sub { font-size: clamp(1.1rem,1.8vw,1.4rem); color: var(--text-mid); max-width: 760px; margin-bottom: 2.2rem; }
+      .hero-actions { display: flex; flex-wrap: wrap; gap: 1rem; }
+      main { padding: 0 2rem 6rem; }
+      section {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 4rem 0 2rem;
+        border-bottom: 1px solid #232a33;
+      }
+      section:last-of-type { border-bottom: none; }
+      .grid {
+        display: grid;
+        gap: 2.5rem;
+      }
+      @media (min-width: 980px) {
+        .grid.cols-3 { grid-template-columns: repeat(3,1fr); }
+        .grid.cols-2 { grid-template-columns: repeat(2,1fr); }
+      }
+      .card {
+        background: linear-gradient(145deg,#181d24,#14171c);
+        border: 1px solid #252d37;
+        border-radius: var(--radius-lg);
+        padding: 1.5rem 1.4rem 1.7rem;
+        position: relative;
+        overflow: hidden;
+        box-shadow: var(--shadow-soft);
+        transition: border-color .35s, transform .35s;
+      }
+      .card:hover { border-color: #324150; transform: translateY(-3px); }
+      .card h3 { margin-top: 0.2rem; }
+      .label {
+        display: inline-block;
+        background: #243042;
+        color: var(--text-mid);
+        font-size: .6rem;
+        letter-spacing: 1.5px;
+        padding: .4rem .55rem;
+        border-radius: 4px;
+        text-transform: uppercase;
+        margin-bottom: .8rem;
+        border: 1px solid #303a46;
+      }
+      .pillars-list {
+        list-style: none; padding: 0; margin: 0; counter-reset: pillar;
+        display: flex; flex-direction: column; gap: 1.2rem;
+      }
+      .pillars-list li {
+        counter-increment: pillar;
+        background: #1b2129;
+        border: 1px solid #262f39;
+        padding: 1.2rem 1.2rem 1.35rem 1.15rem;
+        border-radius: var(--radius-md);
+        position: relative;
+        overflow: hidden;
+        transition: background .3s, border-color .3s;
+      }
+      .pillars-list li:before {
+        content: counter(pillar, decimal-leading-zero);
+        position: absolute;
+        top: .6rem;
+        right: .9rem;
+        font-size: .65rem;
+        letter-spacing: 1px;
+        color: var(--text-dim);
+        opacity: .5;
+      }
+      .pillars-list li:hover {
+        background: #212a35;
+        border-color: #313d49;
+      }
+      details {
+        background: #181e25;
+        border: 1px solid #272f3a;
+        border-radius: var(--radius-md);
+        padding: 1rem 1.2rem;
+        margin: 1.2rem 0;
+      }
+      details[open] {
+        background: #1d242d;
+      }
+      summary {
+        cursor: pointer;
+        font-weight: 600;
+        list-style: none;
+        position: relative;
+      }
+      summary::-webkit-details-marker { display: none; }
+      summary:after {
+        content: "›";
+        position: absolute;
+        right: 0;
+        top: 0;
+        transform: rotate(90deg);
+        transition: transform .3s;
+        font-size: 1.2rem;
+        color: var(--accent);
+      }
+      details:not([open]) summary:after {
+        transform: rotate(0deg);
+      }
+      .duo {
+        display: grid;
+        gap: 2.4rem;
+      }
+      @media (min-width: 960px) { .duo { grid-template-columns: 1.1fr 1fr; } }
+      .emphasis {
+        font-weight: 600;
+        color: var(--accent-warm);
+        text-shadow: 0 0 18px rgba(255,179,71,0.25);
+      }
+      .lede { font-size: 1.05rem; font-weight: 500; color: var(--text-mid); }
+      .quote {
+        font-size: 1.2rem;
+        font-weight: 500;
+        line-height: 1.35;
+        background: linear-gradient(120deg,#1c232b,#171c22);
+        padding: 1.5rem 1.6rem 1.6rem;
+        border-radius: var(--radius-lg);
+        border: 1px solid #272f39;
+        position: relative;
+        margin: 2rem 0;
+      }
+      .quote:before {
+        content: "“";
+        position: absolute;
+        top: -16px;
+        left: 14px;
+        font-size: 4rem;
+        color: #2d3946;
+        opacity: .4;
+        font-family: Georgia, serif;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: .85rem;
+        background: #171d23;
+        border: 1px solid #252f3a;
+        border-radius: var(--radius-md);
+        overflow: hidden;
+      }
+      thead {
+        background: #202933;
+      }
+      th, td {
+        padding: .75rem .8rem;
+        border-bottom: 1px solid #232d37;
+        vertical-align: top;
+      }
+      tr:last-child td { border-bottom: none; }
+      th {
+        text-align: left;
+        font-weight: 600;
+        font-size: .7rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: var(--text-dim);
+      }
+      tbody tr:hover { background: #1d2530; }
+      .table-wrap { overflow-x: auto; margin: 1.2rem 0 2rem; }
+      .wins-controls {
+        display: flex; gap: .6rem; flex-wrap: wrap; margin-bottom: 1rem;
+      }
+      input, textarea {
+        background: #1b232c;
+        border: 1px solid #2b3744;
+        border-radius: 8px;
+        padding: .75rem .85rem;
+        color: var(--text-hi);
+        width: 100%;
+        font: inherit;
+        transition: border-color .25s, background .25s;
+      }
+      input:focus, textarea:focus {
+        outline: none;
+        border-color: var(--accent);
+        background: #202b37;
+        box-shadow: var(--shadow-focus);
+      }
+      form.small-form {
+        display: grid;
+        gap: 1rem;
+        max-width: 620px;
+        margin-top: 1.5rem;
+      }
+      .inline-fields {
+        display: grid;
+        gap: .8rem;
+      }
+      @media (min-width: 640px) { .inline-fields { grid-template-columns: 1fr 1fr; } }
+      footer {
+        background: #121519;
+        padding: 3.5rem 2rem 4rem;
+        border-top: 1px solid #222a33;
+        position: relative;
+      }
+      footer .inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        gap: 2rem;
+      }
+      @media (min-width: 860px) {
+        footer .inner { grid-template-columns: 1.2fr 1fr 1fr 1fr; }
+      }
+      .meta {
+        font-size: .75rem;
+        color: #5d6772;
+        margin-top: 2rem;
+      }
+      .badge-gradient {
+        background: var(--grad-core);
+        -webkit-background-clip: text;
+        color: transparent;
+        font-weight: 600;
+      }
+      .flow-tight > * + * { margin-top: .6rem; }
+      .subtle { color: var(--text-dim); font-size: .85rem; }
+      .flex { display: flex; gap: .6rem; flex-wrap: wrap; }
+      .stack { display: flex; flex-direction: column; gap: 1rem; }
+      .scroll-hint {
+        font-size: .65rem;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        color: var(--text-dim);
+        margin-top: -.4rem;
+      }
+      .tagline-chunk {
+        background: linear-gradient(120deg,#5d7bff22,#ffb34722);
+        padding: .4rem .8rem;
+        border-radius: .6rem;
+        display: inline-block;
+        margin: .2rem .2rem .4rem 0;
+      }
+      .kbd {
+        background: #222b35;
+        border: 1px solid #2f3944;
+        padding: .25rem .5rem;
+        border-radius: 6px;
+        font-size: .65rem;
+        letter-spacing: 1px;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: var(--text-mid);
+      }
+      .status-chip {
+        font-size: .55rem;
+        letter-spacing: 1.2px;
+        text-transform: uppercase;
+        background: #1f2731;
+        border: 1px solid #2c3541;
+        padding: .35rem .5rem;
+        border-radius: 100px;
+        color: var(--text-dim);
+      }
+      .accented {
+        background: linear-gradient(90deg,#273447,#1d2733);
+        padding: 1.2rem 1.2rem 1.3rem;
+        border: 1px solid #2d3743;
+        border-radius: var(--radius-md);
+        margin: 1.2rem 0;
+      }
+      .cta-panel {
+        background: linear-gradient(140deg,#1d2430 0%,#151a21 55%,#1b2230 100%);
+        border: 1px solid #273140;
+        border-radius: var(--radius-lg);
+        padding: 2.4rem clamp(1.2rem,3vw,3rem) 2.9rem;
+        position: relative;
+        overflow: hidden;
+      }
+      .cta-panel:before {
+        content:"";
+        position: absolute;
+        inset:0;
+        background: radial-gradient(circle at 80% 20%,rgba(93,123,255,0.15),transparent 60%);
+        opacity:.8;
+        pointer-events:none;
+      }
+      .badge-line {
+        display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 1.2rem;
+      }
+      .mini-badge {
+        font-size: .55rem;
+        letter-spacing: 1.4px;
+        text-transform: uppercase;
+        background: #222c36;
+        padding: .4rem .6rem;
+        border-radius: 100px;
+        color: var(--text-mid);
+        border: 1px solid #2f3944;
+      }
+      .flow > * + * { margin-top: 1.1rem; }
+      .microcopy { font-size: .65rem; letter-spacing: 1px; text-transform: uppercase; color: var(--text-dim); margin-top: .7rem; }
+      /* Accessibility focus states */
+      a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visible, textarea:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+        border-radius: 6px;
+      }
+      /* Simple animations */
+      @media (prefers-reduced-motion: no-preference) {
+        .fade-in { animation: fade .9s ease .15s both; }
+        @keyframes fade { from { opacity: 0; transform: translateY(14px);} to { opacity:1; transform: translateY(0);} }
+      }
+      /* Mobile navigation (simple collapse) */
+      .mobile-toggle {
+        display: none;
+        background: #212a35;
+        border: 1px solid #2e3845;
+        width: 46px;
+        height: 42px;
+        border-radius: 10px;
+        cursor: pointer;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-mid);
+      }
+      .mobile-toggle span {
+        width: 22px; height: 2px; background: var(--text-mid); position: relative; display: block;
+      }
+      .mobile-toggle span:before, .mobile-toggle span:after {
+        content:""; position: absolute; left: 0; height: 2px; width: 100%; background: inherit;
+      }
+      .mobile-toggle span:before { top: -6px; }
+      .mobile-toggle span:after { top: 6px; }
+      @media (max-width: 860px) {
+        .nav-links { position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; background: #111418; padding: 1rem 2rem 1.5rem; border-bottom: 1px solid #242b33; display: none; }
+        .nav-links.show { display: flex; }
+        .nav-cta { display: none; }
+        .mobile-toggle { display: flex; margin-left: auto; }
+      }
+    </style>
+  </head>
+  <body>
+    <nav aria-label="Primary">
+      <div class="nav-inner">
+        <div class="brand" aria-label="MediAI Home">
+          <span style="font-size:1.3rem;">✦</span> MediAI
+        </div>
+        <button class="mobile-toggle" aria-expanded="false" aria-controls="primary-navigation">
+          <span aria-hidden="true"></span>
+          <span class="sr-only" style="position:absolute;left:-9999px;">Menu</span>
+        </button>
+        <ul class="nav-links" id="primary-navigation">
+          <li><a href="#problem">Problem</a></li>
+            <li><a href="#manifesto">Manifesto</a></li>
+            <li><a href="#congress-ask">Congress Ask</a></li>
+            <li><a href="#medi-ai">MediAI</a></li>
+            <li><a href="#alliance">Alliance</a></li>
+            <li><a href="#aquifer">Aquifers</a></li>
+            <li><a href="#wins-ledger">Wins Ledger</a></li>
+            <li><a href="#join">Join</a></li>
+        </ul>
+        <div class="nav-cta">
+          <a href="#join" class="btn outline">Get Involved</a>
+        </div>
+      </div>
+    </nav>
+
+    <header class="hero fade-in">
+      <div class="hero-inner">
+        <div class="hero-tag">
+          <span class="status-chip">FOUNDING PHASE</span>
+          <span>Architecting Child-Centric Resolution Systems</span>
+        </div>
+        <h1>From Adversarial Scarcity to Relational Sovereignty</h1>
+        <p class="hero-sub">
+          We are designing ethically-governed, AI-assisted mediation ecosystems that de-escalate conflict, protect children from systemic trauma, and transform family resolution from a win–lose tribunal into a shared architecture of healing.
+        </p>
+        <div class="hero-actions">
+          <a href="#manifesto" class="btn">Read the Manifesto</a>
+          <a href="#congress-ask" class="btn alt">Policy Blueprint</a>
+          <a href="#join" class="btn outline">Join the Constellation</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section id="problem">
+        <h2>The System Is a Trauma Engine</h2>
+        <div class="duo">
+          <div>
+            <p class="lede">
+              The institutions meant to neutralize conflict are now primary manufacturers of it. In too many family court ecosystems, adversarial processes amplify harm and entrench trauma pathways.
+            </p>
+            <div class="quote">
+              Our current model doesn’t just fail to heal—it generates new wounds and encodes them into the lives of children who never chose the battlefield.
+            </div>
+            <p>
+              Children are leveraged as procedural assets in zero-sum contests. Psychological safety is rarely the central metric. We are witnessing an archaic operating system still optimized for positional victory rather than relational integrity.
+            </p>
+            <p>
+              This is not inevitable—it's a design failure. Design can be re-authored. Outcomes can be re-oriented. Metrics can be re-centered on child well-being and long-term developmental resilience.
+            </p>
+          </div>
+          <div>
+            <div class="card">
+              <div class="label">Paradigm Shift</div>
+              <h3>Reframing the Core Question</h3>
+              <p>
+                Instead of asking: Who is right? We begin asking: What relational architecture minimizes harm and maximizes the child's long-term flourishing?
+              </p>
+              <ul class="pillars-list">
+                <li><strong>Shift the locus:</strong> From adversarial position to shared developmental stewardship.</li>
+                <li><strong>Shift the unit:</strong> From isolated litigants to a multi-perspective care system.</li>
+                <li><strong>Shift the metric:</strong> From procedural completion to measurable child resilience.</li>
+              </ul>
+            </div>
+            <details>
+              <summary>Why adversarial models persist</summary>
+              <p>
+                Legacy incentives, informational asymmetry, cultural habituation, and absence of outcome transparency reinforce a failing pattern. Without new tooling that makes alternative pathways measurable and respected, system inertia dominates.
+              </p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <section id="manifesto">
+        <h2>The MediAI Manifesto</h2>
+        <p class="lede">
+          We assert that technology must not accelerate extraction or amplify bias; it must extend human conscience, deepen mutual comprehension, and architect pathways toward humane resolution.
+        </p>
+
+        <h3>Pillars of the New Paradigm</h3>
+        <ul class="pillars-list">
+          <li><strong>Child-Centricity:</strong> The child's psychological and emotional safety is the invariant anchor and terminal metric.</li>
+          <li><strong>Radical Transparency:</strong> No black-box influence on life-altering outcomes—explainability is governance.</li>
+          <li><strong>Proactive Ethical Guardrails:</strong> Safety and anti-bias are generative design primitives, not retrofitted patches.</li>
+          <li><strong>Empathic Design:</strong> Interfaces and models engineered to de-escalate, surface shared values, and preserve dignity.</li>
+          <li><strong>Regenerative Data Stewardship:</strong> Data as entrusted commons—used only to remediate harm patterns and uplift collective well-being.</li>
+        </ul>
+
+        <div class="grid cols-3" style="margin-top:2.6rem;">
+          <div class="card">
+            <div class="label">Reorientation</div>
+            <h3>From Velocity to Wisdom</h3>
+            <p>We resist purely efficiency-centric optimization. Speed without ethical depth accelerates damage.</p>
+          </div>
+          <div class="card">
+            <div class="label">Ethics</div>
+            <h3>Embedded Guardrails</h3>
+            <p>Risk modeling, bias audits, and accountability scaffolds are integral system layers, not optional add-ons.</p>
+          </div>
+          <div class="card">
+            <div class="label">Humanity</div>
+            <h3>Designing for Dignity</h3>
+            <p>Interfaces that function as emotional regulators reduce escalation loops and reinforce relational agency.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="congress-ask">
+        <h2>The 5-Minute Congress Ask</h2>
+        <p class="lede">A strategic blueprint: three fiscally grounded and ethically urgent pathways for national adoption of restorative, child-centric resolution ecosystems.</p>
+        <details open>
+          <summary>1. The Children's Compassionate Resolution Fund ($25M)</summary>
+          <p>
+            Competitive grants within HHS to pilot non-adversarial, AI-assisted mediation frameworks. Core KPI: empirically measured improvements in child well-being—not just docket throughput.
+          </p>
+        </details>
+        <details>
+          <summary>2. National Task Force on Ethical AI in Family Adjudication</summary>
+          <p>
+            A multidisciplinary consortium (jurists, child psychologists, AI ethicists, trauma-focused legal scholars) to define binding transparency, safety, and auditability standards before widespread deployment.
+          </p>
+        </details>
+        <details>
+          <summary>3. "Best Interests of the Child" Data Initiative</summary>
+            <p>
+              NIH-led longitudinal comparative data infrastructure: adversarial outcomes versus restorative alternatives. Moves decision-making from anecdote to evidence.
+            </p>
+        </details>
+        <div class="accented">
+          <strong>Framing:</strong> These asks are architecturally conservative: they conserve family integrity, child mental health capital, and public trust in justice systems while reducing long-horizon social costs.
+        </div>
+      </section>
+
+      <section id="medi-ai">
+        <h2>MediAI: Adaptive Mediation Vector</h2>
+        <div class="duo">
+          <div>
+            <p class="lede">
+              MediAI is not a judge. It is a regulated, ethically-specified co-pilot facilitating de-escalation, alignment discovery, and child-vocalized outcome modeling under strict transparency.
+            </p>
+            <h3>Functional Core</h3>
+            <ul class="pillars-list">
+              <li><strong>Real-time Emotional De-escalation:</strong> Suggests reframes for escalatory language while preserving semantic intent.</li>
+              <li><strong>Value Convergence Mapping:</strong> Identifies overlapping priorities hidden beneath adversarial postures.</li>
+              <li><strong>Scenario Visualization:</strong> Projects multi-outcome pathways with annotated impact vectors on child well-being metrics.</li>
+              <li><strong>Ethical Child Voice Representation:</strong> Integrates developmental psych frameworks to prevent proxy distortion.</li>
+              <li><strong>Adaptive Protocol Guidance:</strong> Nudges participants toward restorative sequence patterns validated in pilots.</li>
+            </ul>
+          </div>
+          <div>
+            <div class="card">
+              <div class="label">Integrity Layers</div>
+              <h3>Governance Stack</h3>
+              <p style="margin-bottom:.7rem;"><strong>Layer 1:</strong> Transparent Model Cards + provenance tracking.</p>
+              <p style="margin-bottom:.7rem;"><strong>Layer 2:</strong> Continuous bias sentinel with threshold interrupts.</p>
+              <p style="margin-bottom:.7rem;"><strong>Layer 3:</strong> Human-in-the-loop escalation failsafe protocol.</p>
+              <p style="margin-bottom:.7rem;"><strong>Layer 4:</strong> Immutable audit log (privacy-preserving hashing) for regulatory inspection.</p>
+              <p><strong>Layer 5:</strong> Regenerative feedback assimilation—harm signals route directly into model governance queue.</p>
+            </div>
+            <details>
+              <summary>Why a "Vector" not a "Platform"</summary>
+              <p>
+                A vector integrates into existing process lanes with minimal structural disruption, enabling incremental transformation and comparative data collection without demanding wholesale procedural replacement on day one.
+              </p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <section id="alliance">
+        <h2>Alliance Engineering: Building Your Constellation</h2>
+        <p class="lede">
+          We optimize for resonance density over platform magnitude. Strategic alliances form a pattern intelligence network capable of shifting policy, practice, and narrative.
+        </p>
+        <div class="grid cols-3">
+          <div class="card">
+            <div class="label">Discovery</div>
+            <h3>Where to Look</h3>
+            <p>Peer-reviewed research authors, restorative justice NGOs, conference speaker rosters, trauma-informed policy labs, and ethical AI standards groups.</p>
+          </div>
+          <div class="card">
+            <div class="label">Resonance First</div>
+            <h3>Outreach Pattern</h3>
+            <p>Short, work-honoring inquiry emails requesting micro-wisdom, not endorsement. Position yourself as co-architect, not supplicant.</p>
+          </div>
+          <div class="card">
+            <div class="label">Cadence</div>
+            <h3>Micro-Commitments</h3>
+            <p>Leverage 15-minute advisory pulses; convert to recurring participation only after validated mutual alignment.</p>
+          </div>
+        </div>
+        <details style="margin-top:2rem;">
+          <summary>Sample Outreach Email Template</summary>
+          <p>
+            Subject: Resonance with your work on [Specific Area]<br><br>
+            Dear Dr./Ms./Mr. [Last Name],<br><br>
+            I was struck by your work on [Specific Paper/Talk], especially your framing of [Specific Insight]. I am developing MediAI—a child-centric, ethically-governed mediation co-pilot—to reduce system-generated trauma in family conflict processes.<br><br>
+            I am not seeking endorsement—only your perspective. Would you be open to a focused 15-minute exchange on pitfalls we must anticipate?<br><br>
+            Grateful for your time and contributions.<br>
+            [Your Name]
+          </p>
+        </details>
+      </section>
+
+      <section id="aquifer">
+        <h2>Digging Aquifers: Subsurface Community Containers</h2>
+        <p class="lede">
+          Public narratives are rivers—visible, often contested, easily dammed. Aquifers are subsurface reservoirs of trust, intelligence, and regenerative resource flow.
+        </p>
+        <div class="grid cols-2">
+          <div class="card">
+            <div class="label">Container 1</div>
+            <h3>Secure Working Group</h3>
+            <p>High-trust encrypted channel (e.g., Signal) for draft refinement, rapid feedback, and psychological safety.</p>
+          </div>
+          <div class="card">
+            <div class="label">Container 2</div>
+            <h3>Minimum Viable Ritual</h3>
+            <p>
+              Biweekly 45-minute "Aquifer Call":<br>
+              15m Wins & Learnings<br>
+              20m Strategic Sparring<br>
+              10m Signal Listening
+            </p>
+          </div>
+          <div class="card">
+            <div class="label">Container 3</div>
+            <h3>Shared Knowledge Repository</h3>
+            <p>Collectively curated, version-controlled research + policy drafts + story banks forming an evolving brain trust.</p>
+          </div>
+          <div class="card">
+            <div class="label">Container 4</div>
+            <h3>Story Bank Protocol</h3>
+            <p>Secure, anonymized intake of lived experience—ethically stewarded narrative data powering moral credibility loops.</p>
+          </div>
+        </div>
+        <div class="accented">
+          <strong>Outcome:</strong> Aquifers reduce dependency on gate-kept systems, enabling resilient continuity regardless of surface-level narrative turbulence.
+        </div>
+      </section>
+
+      <section id="wins-ledger">
+        <h2>Tangible Wins Ledger</h2>
+        <p class="lede">
+          A weekly structured ritual to counteract learned futility. Progress is surfaced, stabilized, and metabolized into forward momentum.
+        </p>
+        <div class="wins-controls">
+          <button class="btn outline" id="add-row-btn" type="button">Add Row</button>
+          <button class="btn alt" id="export-json-btn" type="button">Export JSON</button>
+          <button class="btn alt" id="clear-rows-btn" type="button">Clear</button>
+        </div>
+        <div class="table-wrap" aria-live="polite">
+          <table id="wins-table">
+            <thead>
+              <tr>
+                <th style="width:110px;">Date</th>
+                <th>Action Taken (Micro + Specific)</th>
+                <th>Outcome / Insight</th>
+                <th style="width:160px;">Impact on Futility (1-10)</th>
+                <th style="width:60px;">Del</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input type="date" aria-label="Date"></td>
+                <td><textarea rows="2" placeholder="Refined problem statement..."></textarea></td>
+                <td><textarea rows="2" placeholder="Clarity: core failure is system-generated trauma..."></textarea></td>
+                <td><input type="number" min="1" max="10" placeholder="7"></td>
+                <td><button class="btn alt delete-row" type="button" style="padding:.4rem .6rem;">×</button></td>
+              </tr>
+              <tr>
+                <td><input type="date" aria-label="Date"></td>
+                <td><textarea rows="2" placeholder="Identified Dr. X in restorative justice research..."></textarea></td>
+                <td><textarea rows="2" placeholder="Allies are findable—outreach path validated."></textarea></td>
+                <td><input type="number" min="1" max="10" placeholder="6"></td>
+                <td><button class="btn alt delete-row" type="button" style="padding:.4rem .6rem;">×</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="subtle">Tip: Review pattern delta week-over-week; rising average futility score signals reinforcement is working; declines trigger reflective diagnostic.</p>
+      </section>
+
+      <section id="join">
+        <h2>Join the Bridge Builders</h2>
+        <p class="lede">We are assembling a constellation: trauma-informed practitioners, ethical technologists, child advocates, system reformers. Contribute perspective, pilot participation, governance insight, or policy alignment.</p>
+        <div class="cta-panel">
+          <div class="badge-line">
+            <div class="mini-badge">ETHICS</div>
+            <div class="mini-badge">CHILD-CENTRIC</div>
+            <div class="mini-badge">TRAUMA-INFORMED</div>
+            <div class="mini-badge">DATA-TRANSPARENT</div>
+          </div>
+          <h3 style="margin-top:0;">Signal Your Interest</h3>
+          <form class="small-form" id="interest-form" novalidate>
+            <div class="inline-fields">
+              <div>
+                <label for="name" class="subtle">Name</label>
+                <input id="name" name="name" required placeholder="Your name">
+              </div>
+              <div>
+                <label for="email" class="subtle">Email</label>
+                <input id="email" name="email" type="email" required placeholder="you@example.org">
+              </div>
+            </div>
+            <div>
+              <label for="role" class="subtle">Role / Domain</label>
+              <input id="role" name="role" placeholder="e.g., Child Psychologist, Mediator, AI Ethicist">
+            </div>
+            <div>
+              <label for="alignment" class="subtle">Alignment Statement (1–3 sentences)</label>
+              <textarea id="alignment" name="alignment" rows="3" placeholder="Where does your work intersect this paradigm shift?"></textarea>
+            </div>
+            <div>
+              <label for="contribution" class="subtle">Potential Contribution</label>
+              <textarea id="contribution" name="contribution" rows="3" placeholder="Pilot site, research advisory, governance review, storytelling, etc."></textarea>
+            </div>
+            <div class="flex">
+              <button type="submit" class="btn">Submit Interest</button>
+              <button type="reset" class="btn alt">Reset</button>
+            </div>
+            <div id="form-status" class="microcopy" role="status" aria-live="polite"></div>
+          </form>
+          <p class="microcopy">We do not sell or repurpose data. Used solely for curated alliance formation.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="inner">
+        <div>
+          <h3 style="margin-top:0;">MediAI</h3>
+          <p>Architecting regenerative, child-centric conflict transformation ecosystems infused with ethical AI guardrails.</p>
+          <p class="subtle">&copy; <span id="year"></span> MediAI. All Rights Reserved.</p>
+        </div>
+        <div>
+          <h4>Navigate</h4>
+          <p class="flow-tight">
+            <a href="#problem">Problem</a><br>
+            <a href="#manifesto">Manifesto</a><br>
+            <a href="#medi-ai">MediAI</a><br>
+            <a href="#congress-ask">Policy Ask</a><br>
+            <a href="#wins-ledger">Wins Ledger</a>
+          </p>
+        </div>
+        <div>
+          <h4>Principles</h4>
+          <p class="flow-tight">
+            Child-Centricity<br>
+            Radical Transparency<br>
+            Empathic Design<br>
+            Ethical Guardrails<br>
+            Regenerative Stewardship
+          </p>
+        </div>
+        <div>
+          <h4>Engage</h4>
+          <p class="flow-tight">
+            <a href="#join">Join the Constellation</a><br>
+            <a href="#aquifer">Aquifer Strategy</a><br>
+            <a href="#alliance">Alliance Engineering</a>
+          </p>
+        </div>
+      </div>
+      <div class="meta">
+        Built for early-phase strategic alignment. This page is a living document; iterate with field feedback.
+      </div>
+    </footer>
+
+    <script>
+      // Accessibility utilities
+      const navToggle = document.querySelector('.mobile-toggle');
+      const navLinks = document.querySelector('.nav-links');
+
+      navToggle?.addEventListener('click', () => {
+        const expanded = navToggle.getAttribute('aria-expanded') === 'true';
+        navToggle.setAttribute('aria-expanded', String(!expanded));
+        navLinks.classList.toggle('show');
+      });
+
+      // Wins Ledger dynamic rows
+      const winsTable = document.getElementById('wins-table').querySelector('tbody');
+      const addRowBtn = document.getElementById('add-row-btn');
+      const exportBtn = document.getElementById('export-json-btn');
+      const clearBtn = document.getElementById('clear-rows-btn');
+
+      function createRow() {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><input type="date" aria-label="Date"></td>
+          <td><textarea rows="2" placeholder="Describe micro action..."></textarea></td>
+          <td><textarea rows="2" placeholder="Outcome / Insight..."></textarea></td>
+          <td><input type="number" min="1" max="10" placeholder="5"></td>
+          <td><button type="button" class="btn alt delete-row" style="padding:.4rem .6rem;">×</button></td>
+        `;
+        winsTable.appendChild(tr);
+      }
+
+      addRowBtn?.addEventListener('click', createRow);
+
+      document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('delete-row')) {
+          const row = e.target.closest('tr');
+            if (row) row.remove();
+        }
+      });
+
+      exportBtn?.addEventListener('click', () => {
+        const data = [];
+        winsTable.querySelectorAll('tr').forEach(tr => {
+          const cells = tr.querySelectorAll('td');
+          const date = cells[0].querySelector('input').value;
+          const action = cells[1].querySelector('textarea').value;
+          const outcome = cells[2].querySelector('textarea').value;
+          const impact = cells[3].querySelector('input').value;
+          if (date || action || outcome || impact) {
+            data.push({ date, action, outcome, impact });
+          }
+        });
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.download = 'wins-ledger.json';
+        a.href = url;
+        a.click();
+        URL.revokeObjectURL(url);
+      });
+
+      clearBtn?.addEventListener('click', () => {
+        if (confirm('Clear all dynamic rows?')) {
+          winsTable.innerHTML = '';
+        }
+      });
+
+      // Interest form pseudo-processing
+      const form = document.getElementById('interest-form');
+      const formStatus = document.getElementById('form-status');
+      form?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const formData = new FormData(form);
+        const payload = Object.fromEntries(formData.entries());
+        // Basic validation
+        if (!payload.name || !payload.email) {
+          formStatus.textContent = 'Please fill required fields (Name, Email).';
+          formStatus.style.color = '#ff5f56';
+          return;
+        }
+        formStatus.textContent = 'Submitting...';
+        formStatus.style.color = '#b7c2d1';
+        setTimeout(() => {
+          formStatus.textContent = 'Submitted. We will contact you soon (simulation).';
+          formStatus.style.color = '#4cc38a';
+          form.reset();
+        }, 900);
+      });
+
+      // Current year
+      document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+  </body>
+  </html>
